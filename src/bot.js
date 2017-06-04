@@ -26,8 +26,23 @@ bot.onEvent = function(session, message) {
   }
 }
 
-function onMessage(session, message) {
-  welcome(session)
+async function onMessage(session, message) {
+  const logoMessage =
+   SOFA.Message({
+     body: "Here is your logo!",
+     attachments: [{
+       type: "image",
+       url: "ethereum.jpg"
+     }]
+   });
+  const textMessage = 'Welcome to the Interdimensional Television Channel!'
+  const payment = await Fiat.fetch().then((toEth) => {
+    return toEth.USD(1);
+  });
+
+  session
+    .requestEth(payment);
+    //.reply(textMessage);
 }
 
 function onCommand(session, command) {
